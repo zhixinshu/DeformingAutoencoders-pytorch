@@ -34,18 +34,18 @@ parser.add_argument('--manualSeed', type=int, help='manual seed')
 parser.add_argument('--epoch_iter', type=int,default=600, help='number of epochs on entire dataset')
 parser.add_argument('--location', type = int, default=0, help ='where is the code running')
 parser.add_argument('-f',type=str,default= '', help='dummy input required for jupyter notebook')
+parser.add_argument('--modelPath', default='', help="path to model (to continue training)")
+parser.add_argument('--dirCheckpoints', default='/nfs/bigdisk/zhshu/daeout/checkpoints/IntrinsicDAE_CelebA', help='folder to model checkpoints')
+parser.add_argument('--dirImageoutput', default='/nfs/bigdisk/zhshu/daeout/images/IntrinsicDAE_CelebA', help='folder to output images')
+parser.add_argument('--dirTestingoutput', default='/nfs/bigdisk/zhshu/daeout/testing/IntrinsicDAE_CelebA', help='folder to testing results/images')
+parser.add_argument('--useDense', default = False, action='store_flase', help='enables dense net architecture')
 opt = parser.parse_args()
 
-if opt.location == 0:
-    opt.output_dir_prefix = '/nfs/bigdisk/zhshu/daeout/'
-    opt.data_dir_prefix = '/nfs/bigdisk/zhshu/data/wasp/'   
 
-# path to previously trained model, if empty, training from scratch
-opt.modelPath = ''
-# save check point and image output to the following path
-opt.dirCheckpoints   =   '/nfs/bigdisk/zhshu/daeout/checkpoints/Dense_IntrinsicDAE_CelebA'
-opt.dirImageoutput   =   '/nfs/bigdisk/zhshu/daeout/images/Dense_IntrinsicDAE_CelebA'
-opt.dirTestingoutput =   '/nfs/bigdisk/zhshu/daeout/testing/Dense_IntrinsicDAE_CelebA'
+opt.output_dir_prefix = '/nfs/bigdisk/zhshu/daeout/'
+opt.data_dir_prefix = '/nfs/bigdisk/zhshu/data/wasp/'   
+
+
 # size of image
 opt.imgSize=64
 opt.cuda = True
