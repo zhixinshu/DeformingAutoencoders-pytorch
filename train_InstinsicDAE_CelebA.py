@@ -38,12 +38,9 @@ parser.add_argument('--modelPath', default='', help="path to model (to continue 
 parser.add_argument('--dirCheckpoints', default='/nfs/bigdisk/zhshu/daeout/checkpoints/IntrinsicDAE_CelebA', help='folder to model checkpoints')
 parser.add_argument('--dirImageoutput', default='/nfs/bigdisk/zhshu/daeout/images/IntrinsicDAE_CelebA', help='folder to output images')
 parser.add_argument('--dirTestingoutput', default='/nfs/bigdisk/zhshu/daeout/testing/IntrinsicDAE_CelebA', help='folder to testing results/images')
+parser.add_argument('--dirDataroot', default='/nfs/bigdisk/zhshu/data/wasp/', help='folder to dataroot')
 parser.add_argument('--useDense', default = True, help='enables dense net architecture')
 opt = parser.parse_args()
-
-
-opt.output_dir_prefix = '/nfs/bigdisk/zhshu/daeout/'
-opt.data_dir_prefix = '/nfs/bigdisk/zhshu/data/wasp/'   
 
 
 # size of image
@@ -190,30 +187,30 @@ criterionSmoothL2   = DAENet.SelfSmoothLoss2(opt)
 
 # Training set
 TrainingData = []
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_00')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_00')
 '''
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_01')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_02')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_03')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_04')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_05')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_06')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_07')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_08')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_09')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_10')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_11')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_12')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_13')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_14')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_15')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_16')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_17')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_18')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_01')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_02')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_03')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_04')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_05')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_06')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_07')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_08')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_09')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_10')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_11')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_12')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_13')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_14')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_15')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_16')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_17')
+TrainingData.append(opt.dirDataroot + 'celeba_split/img_18')
 '''
 # Testing set
 TestingData = []
-TestingData.append(opt.data_dir_prefix + 'celeba_split/img_19')
+TestingData.append(opt.dirDataroot + 'celeba_split/img_19')
 
 
 # ------------ training ------------ #
