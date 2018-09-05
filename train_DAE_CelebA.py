@@ -43,9 +43,9 @@ if opt.location == 0:
 # path to previously trained model, if empty, training from scratch
 opt.modelPath = ''
 # save check point and image output to the following path
-opt.dirCheckpoints   =   '/nfs/bigdisk/zhshu/daeout/checkpoints/Dense_IntrinsicDAE_CelebA'
-opt.dirImageoutput   =   '/nfs/bigdisk/zhshu/daeout/images/Dense_IntrinsicDAE_CelebA'
-opt.dirTestingoutput =   '/nfs/bigdisk/zhshu/daeout/testing/Dense_IntrinsicDAE_CelebA'
+opt.dirCheckpoints   =   '/nfs/bigdisk/zhshu/daeout/checkpoints/DAE_CelebA'
+opt.dirImageoutput   =   '/nfs/bigdisk/zhshu/daeout/images/DAE_CelebA'
+opt.dirTestingoutput =   '/nfs/bigdisk/zhshu/daeout/testing/DAE_CelebA'
 # size of image
 opt.imgSize=64
 opt.cuda = True
@@ -66,6 +66,7 @@ opt.use_gpu = True
 opt.gpu_ids = 0
 opt.ngpu = 1
 opt.nc = 3
+opt.useDense=True
 print(opt)
 
 try:
@@ -156,12 +157,17 @@ def setAsVariable(*args):
 # get network
 import DAENet
 
-encoders      = DAENet.Dense_Encoders_Intrinsic(opt)
-decoders      = DAENet.Dense_DecodersIntegralWarper2_Intrinsic(opt)
+if opt.useDense:
+    encoders      = DAENet.Dense_Encoders(opt)
+    decoders      = DAENet.Dense_DecodersIntegralWarper2(opt)
+else:
+    encoders      = DAENet.Encoders(opt)
+    decoders      = DAENet.DecodersIntegralWarper2(opt)
 
 if opt.cuda:
     encoders.cuda()
     decoders.cuda()
+
 if not opt.modelPath=='':
     # rewrite here
     print('Reload previous model at: '+ opt.modelPath)
@@ -246,30 +252,28 @@ for epoch in range(opt.epoch_iter):
             decoders.zero_grad()
             encoders.zero_grad()
             ### forward training points: dp0
-            dp0_z, dp0_zS, dp0_zT, dp0_zW = encoders(dp0_img)
-            dp0_S, dp0_T, dp0_I, dp0_W, dp0_output, dp0_Wact = decoders(dp0_zS, dp0_zT, dp0_zW, baseg)
+            dp0_z, dp0_zI, dp0_zW = encoders(dp0_img)
+            dp0_I, dp0_W, dp0_output, dp0_Wact = decoders(dp0_zI, dp0_zW, baseg)
             # reconstruction loss
             loss_recon = criterionRecon(dp0_output, dp0_img)
             # smooth warping loss
             loss_tvw = criterionTVWarp(dp0_W, weight=1e-6)
             # bias reduce loss
             loss_br = criterionBiasReduce(dp0_W, zeroWarp, weight=1e-2)
-            # intrinsic loss :Shading, L2
-            loss_intr_S = criterionSmoothL2(dp0_S, weight = 1e-6)
             # all loss functions
-            loss_all = loss_recon + loss_tvw + loss_br + loss_intr_S
+            loss_all = loss_recon + loss_tvw + loss_br
             loss_all.backward()
 
             updator_decoders.step()
             updator_encoders.step()
 
-            loss_encdec = loss_recon.data[0] + loss_br.data[0] + loss_tvw.data[0] + loss_intr_S.data[0] 
+            loss_encdec = loss_recon.data[0] + loss_br.data[0] + loss_tvw.data[0]
 
             train_loss += loss_encdec
             
             iter_mark+=1
-            print('Iteration[%d] loss -- all:  %.4f .. recon:  %.4f .. tvw: %.4f .. br: %.4f .. intr_s: %.4f .. ' 
-                % (iter_mark,  loss_encdec, loss_recon.data[0], loss_tvw.data[0], loss_br.data[0], loss_intr_S.data[0]))
+            print('Iteration[%d] loss -- all:  %.4f .. recon:  %.4f .. tvw: %.4f .. br: %.4f .. ' 
+                % (iter_mark,  loss_encdec, loss_recon.data[0], loss_tvw.data[0], loss_br.data[0]))
         # visualzing training progress
         gx = (dp0_W.data[:,0,:,:]+baseg.data[:,0,:,:]).unsqueeze(1).clone()
         gy = (dp0_W.data[:,1,:,:]+baseg.data[:,1,:,:]).unsqueeze(1).clone()
@@ -279,12 +283,6 @@ for epoch in range(opt.epoch_iter):
         visualizeAsImages(dp0_I.data.clone(), 
             opt.dirImageoutput, 
             filename='iter_'+str(iter_mark)+'_tex0_', n_sample = 49, nrow=7, normalize=False)
-        visualizeAsImages(dp0_S.data.clone(), 
-            opt.dirImageoutput, 
-            filename='iter_'+str(iter_mark)+'_intr_shade0_', n_sample = 49, nrow=7, normalize=False)
-        visualizeAsImages(dp0_T.data.clone(), 
-            opt.dirImageoutput, 
-            filename='iter_'+str(iter_mark)+'_intr_tex0_', n_sample = 49, nrow=7, normalize=False)
         visualizeAsImages(dp0_output.data.clone(), 
             opt.dirImageoutput, 
             filename='iter_'+str(iter_mark)+'_output0_', n_sample = 49, nrow=7, normalize=False)   
@@ -338,17 +336,15 @@ for epoch in range(opt.epoch_iter):
             loss_tvw = criterionTVWarp(dp0_W, weight=1e-6)
             # bias reduce loss
             loss_br = criterionBiasReduce(dp0_W, zeroWarp, weight=1e-2)
-            # intrinsic loss :Shading, L2
-            loss_intr_S = criterionSmoothL2(dp0_S, weight = 1e-6)
             # all loss functions
-            loss_all = loss_recon + loss_tvw + loss_br + loss_intr_S
+            loss_all = loss_recon + loss_tvw + loss_br 
 
-            loss_encdec = loss_recon.data[0] + loss_br.data[0] + loss_tvw.data[0] + loss_intr_S.data[0] 
+            loss_encdec = loss_recon.data[0] + loss_br.data[0] + loss_tvw.data[0] 
 
             testing_loss += loss_encdec
             
-            print('Iteration[%d] loss -- all:  %.4f .. recon:  %.4f .. tvw: %.4f .. br: %.4f .. intr_s: %.4f .. ' 
-                % (iter_mark,  loss_encdec, loss_recon.data[0], loss_tvw.data[0], loss_br.data[0], loss_intr_S.data[0]))
+            print('Iteration[%d] loss -- all:  %.4f .. recon:  %.4f .. tvw: %.4f .. br: %.4f ' 
+                % (iter_mark,  loss_encdec, loss_recon.data[0], loss_tvw.data[0], loss_br.data[0]))
         # visualzing training progress
         gx = (dp0_W.data[:,0,:,:]+baseg.data[:,0,:,:]).unsqueeze(1).clone()
         gy = (dp0_W.data[:,1,:,:]+baseg.data[:,1,:,:]).unsqueeze(1).clone()
@@ -358,12 +354,6 @@ for epoch in range(opt.epoch_iter):
         visualizeAsImages(dp0_I.data.clone(), 
             opt.dirTestingoutput, 
             filename='tex0_', n_sample = 49, nrow=7, normalize=False)
-        visualizeAsImages(dp0_S.data.clone(), 
-            opt.dirTestingoutput, 
-            filename='intr_shade0_', n_sample = 49, nrow=7, normalize=False)
-        visualizeAsImages(dp0_T.data.clone(), 
-            opt.dirTestingoutput, 
-            filename='intr_tex0_', n_sample = 49, nrow=7, normalize=False)
         visualizeAsImages(dp0_output.data.clone(), 
             opt.dirTestingoutput, 
             filename='output0_', n_sample = 49, nrow=7, normalize=False)   
