@@ -38,7 +38,7 @@ parser.add_argument('--modelPath', default='', help="path to model (to continue 
 parser.add_argument('--dirCheckpoints', default='/nfs/bigdisk/zhshu/daeout/checkpoints/DAE_CelebA', help='folder to model checkpoints')
 parser.add_argument('--dirImageoutput', default='/nfs/bigdisk/zhshu/daeout/images/DAE_CelebA', help='folder to output images')
 parser.add_argument('--dirTestingoutput', default='/nfs/bigdisk/zhshu/daeout/testing/DAE_CelebA', help='folder to testing results/images')
-parser.add_argument('--useDense', default = False, help='enables dense net architecture')
+parser.add_argument('--useDense', default = True, help='enables dense net architecture')
 opt = parser.parse_args()
 
 

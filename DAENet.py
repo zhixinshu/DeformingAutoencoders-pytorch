@@ -469,6 +469,7 @@ class Dense_Encoders_Intrinsic(nn.Module):
 class DecodersIntegralWarper2(nn.Module):
     def __init__(self, opt):
         super(DecodersIntegralWarper2, self).__init__()
+        self.imagedimension = opt.imgSize
         self.ngpu = opt.ngpu
         self.idim = opt.idim
         self.wdim = opt.wdim
@@ -479,7 +480,7 @@ class DecodersIntegralWarper2(nn.Module):
         self.cutter = nn.Hardtanh(-1,1)
     def forward(self, zI, zW, basegrid):
         self.texture = self.decoderI(zI.view(-1,self.idim,1,1))
-        self.diffentialWarping = self.decoderW(zW.view(-1,self.wdim,1,1))*0.08
+        self.diffentialWarping = self.decoderW(zW.view(-1,self.wdim,1,1))*(5.0/self.imagedimension)
         self.warping = self.integrator(self.diffentialWarping)-1.2
         self.warping = self.cutter(self.warping)
         self.resWarping = self.warping-basegrid
@@ -491,6 +492,7 @@ class DecodersIntegralWarper2(nn.Module):
 class DecodersIntegralWarper2_Intrinsic(nn.Module):
     def __init__(self, opt):
         super(DecodersIntegralWarper2_Intrinsic, self).__init__()
+        self.imagedimension = opt.imgSize
         self.ngpu = opt.ngpu
         self.idim = opt.idim
         self.sdim = opt.sdim
@@ -507,7 +509,7 @@ class DecodersIntegralWarper2_Intrinsic(nn.Module):
         self.shading = self.decoderS(zS.view(-1,self.sdim,1,1))
         self.texture = self.decoderT(zT.view(-1,self.tdim,1,1))
         self.img = self.intrinsicComposer(self.shading, self.texture)
-        self.diffentialWarping = self.decoderW(zW.view(-1,self.wdim,1,1))*0.08
+        self.diffentialWarping = self.decoderW(zW.view(-1,self.wdim,1,1))*(5.0/self.imagedimension)
         self.warping = self.integrator(self.diffentialWarping)-1.2
         self.warping = self.cutter(self.warping)
         self.resWarping = self.warping-basegrid
@@ -519,6 +521,7 @@ class DecodersIntegralWarper2_Intrinsic(nn.Module):
 class Dense_DecodersIntegralWarper2(nn.Module):
     def __init__(self, opt):
         super(Dense_DecodersIntegralWarper2, self).__init__()
+        self.imagedimension = opt.imgSize
         self.ngpu = opt.ngpu
         self.idim = opt.idim
         self.wdim = opt.wdim
@@ -529,7 +532,7 @@ class Dense_DecodersIntegralWarper2(nn.Module):
         self.cutter = nn.Hardtanh(-1,1)
     def forward(self, zI, zW, basegrid):
         self.img = self.decoderI(zI.view(-1,self.idim,1,1))
-        self.diffentialWarping = self.decoderW(zW.view(-1,self.wdim,1,1))*0.08
+        self.diffentialWarping = self.decoderW(zW.view(-1,self.wdim,1,1))*(5.0/self.imagedimension)
         self.warping = self.integrator(self.diffentialWarping)-1.2
         self.warping = self.cutter(self.warping)
         self.resWarping = self.warping-basegrid
