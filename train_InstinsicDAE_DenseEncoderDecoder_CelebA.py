@@ -302,8 +302,9 @@ for epoch in range(opt.epoch_iter):
     # ------------ testing ------------ #
     
     # on synthetic image set
-    print('Testing on synthetic images ... ')
+    print('Testing images ... ')
     #raw_input("Press Enter to continue...")
+    testing_loss=0
     gc.collect() # collect garbage
     for dataroot in TestingData:
         if not doTesting:
