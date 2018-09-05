@@ -46,18 +46,15 @@ opt.modelPath = ''
 opt.dirCheckpoints   =   '/nfs/bigdisk/zhshu/daeout/checkpoints/DAE_CelebA'
 opt.dirImageoutput   =   '/nfs/bigdisk/zhshu/daeout/images/DAE_CelebA'
 opt.dirTestingoutput =   '/nfs/bigdisk/zhshu/daeout/testing/DAE_CelebA'
+
 # size of image
 opt.imgSize=64
 opt.cuda = True
 opt.use_dropout = 0
 opt.ngf = 32
 opt.ndf = 32
-# dimensionality: shading latent code
-opt.sdim = 16
-# dimensionality: albedo latent code
-opt.tdim = 16
-# dimensionality: texture (shading*albedo) latent code
-opt.idim = opt.sdim + opt.tdim
+# dimensionality: texture latent code
+opt.idim = 32
 # dimensionality: warping grid (deformation field) latent code
 opt.wdim = 128
 # dimensionality of general latent code (before disentangling)

@@ -66,7 +66,7 @@ opt.use_gpu = True
 opt.gpu_ids = 0
 opt.ngpu = 1
 opt.nc = 3
-opt.useDense=True
+opt.useDense=False
 print(opt)
 
 try:
