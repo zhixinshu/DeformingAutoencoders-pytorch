@@ -205,11 +205,10 @@ TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_15')
 TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_16')
 TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_17')
 TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_18')
-TrainingData.append(opt.data_dir_prefix + 'celeba_split/img_19')
 '''
 # Testing set
 TestingData = []
-TestingData.append(opt.data_dir_prefix + 'celeba_split/img_20')
+TestingData.append(opt.data_dir_prefix + 'celeba_split/img_19')
 
 
 # ------------ training ------------ #
