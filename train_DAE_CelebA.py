@@ -66,7 +66,7 @@ opt.use_gpu = True
 opt.gpu_ids = 0
 opt.ngpu = 1
 opt.nc = 3
-opt.useDense=True
+opt.useDense=False
 print(opt)
 
 try:
@@ -328,8 +328,8 @@ for epoch in range(opt.epoch_iter):
             decoders.zero_grad()
             encoders.zero_grad()
             ### forward training points: dp0
-            dp0_z, dp0_zS, dp0_zT, dp0_zW = encoders(dp0_img)
-            dp0_S, dp0_T, dp0_I, dp0_W, dp0_output, dp0_Wact = decoders(dp0_zS, dp0_zT, dp0_zW, baseg)
+            dp0_z, dp0_zI, dp0_zW = encoders(dp0_img)
+            dp0_I, dp0_W, dp0_output, dp0_Wact = decoders(dp0_zI, dp0_zW, baseg)
             # reconstruction loss
             loss_recon = criterionRecon(dp0_output, dp0_img)
             # smooth warping loss
