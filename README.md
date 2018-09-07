@@ -12,6 +12,7 @@ To train a DAE, run
 python train_DAE_CelebA.py --dirDataroot=[path_to_root_of_training_data] --dirCheckpoints=[path_to_checkpoints] --dirImageoutput=[path_to_output directory for training] --dirTestingoutput=[path_to_output directory for testing]
 
 To train an IntrinsicDAE, run
+
 python train_IntrinsicDAE_CelebA.py --dirDataroot=[path_to_root_of_training_data] --dirCheckpoints=[path_to_checkpoints] --dirImageoutput=[path_to_output directory for training] --dirTestingoutput=[path_to_output directory for testing]
 
 set --useDense=True (default) for DenseNet-like encoder/decoder (no skip connections over the bottleneck latent representations); --useDense=False for a smaller encoder-decoder architecture.
