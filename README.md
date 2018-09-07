@@ -8,4 +8,5 @@ http://www3.cs.stonybrook.edu/~cvl/dae.html
 Requirements: PyTorch
 
 To train a DAE, run
+
 python train_DAE_CelebA.py --dirDataroot=[path_to_root_of_training_data] --dirCheckpoints=[path_to_checkpoints] --dirImageoutput=[path_to_output directory]
