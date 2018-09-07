@@ -26,4 +26,6 @@ Place the training images in [path_to_root_of_training_data]/celeba_split/img_00
 (Split the dataset into multiple subsets if wanted.)
 
 If using the code, please cite: 
+
 Deforming Autoencoders: Unsupervised Disentangling of Shape and Appearance, Zhixin Shu, Mihir Sahasrabudhe, Riza Alp Guler, Dimitris Samaras, Nikos Paragios, and Iasonas Kokkinos. European Conference on Computer Vision (ECCV), 2018.
+
