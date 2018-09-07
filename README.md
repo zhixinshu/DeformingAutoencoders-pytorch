@@ -1,2 +1,6 @@
 # DeformingAutoencoders-pytorch
-Pytorch code for DAE, Class-aware DAE and IntrinsicDAE
+Pytorch code for DAE, and IntrinsicDAE
+
+# Project Page:
+http://www3.cs.stonybrook.edu/~cvl/dae.html
+
