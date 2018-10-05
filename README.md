@@ -28,6 +28,7 @@ Place the training images in [path_to_root_of_training_data]/celeba_split/img_00
 Checkpoints:
 Some example checkpoints can be found at:
 https://drive.google.com/drive/folders/1A2Qj1NhzVU5XSjeilKhjWwAgNWvlRyuA?usp=sharing
+
 Three examples are provided:
 1. DAE for CelebA with Dense encoder decoder, where opt.idim = 8 (./DAE_CelebA_idim8)
 2. DAE for CelebA with Dense encoder decoder, where opt.idim = 16 (./DAE_CelebA_idim16)
