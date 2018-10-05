@@ -43,28 +43,20 @@ parser.add_argument('--useDense', default = True, help='enables dense net archit
 opt = parser.parse_args()
 
 
-# size of image
 opt.imgSize=64
 opt.cuda = True
 opt.use_dropout = 0
 opt.ngf = 32
 opt.ndf = 32
-# dimensionality: shading latent code
 opt.sdim = 16
-# dimensionality: albedo latent code
 opt.tdim = 16
-# dimensionality: texture (shading*albedo) latent code
 opt.idim = opt.sdim + opt.tdim
-# dimensionality: warping grid (deformation field) latent code
 opt.wdim = 128
-# dimensionality of general latent code (before disentangling)
 opt.zdim = 128
 opt.use_gpu = True
-opt.gpu_ids = 0
+opt.gpu_ids = 3
 opt.ngpu = 1
 opt.nc = 3
-opt.useDense=False
-print(opt)
 
 try:
     os.makedirs(opt.dirCheckpoints)

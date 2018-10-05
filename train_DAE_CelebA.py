@@ -48,7 +48,7 @@ opt.use_dropout = 0
 opt.ngf = 32
 opt.ndf = 32
 # dimensionality: texture latent code
-opt.idim = 32
+opt.idim = 16
 # dimensionality: warping grid (deformation field) latent code
 opt.wdim = 128
 # dimensionality of general latent code (before disentangling)
