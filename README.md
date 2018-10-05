@@ -32,7 +32,7 @@ https://drive.google.com/drive/folders/1A2Qj1NhzVU5XSjeilKhjWwAgNWvlRyuA?usp=sha
 Three examples are provided:
 1. DAE for CelebA with Dense encoder decoder, where opt.idim = 8 (./DAE_CelebA_idim8)
 2. DAE for CelebA with Dense encoder decoder, where opt.idim = 16 (./DAE_CelebA_idim16)
-3. IntrinsicDAE for CelebA with Dense encoder decoder, where opt.idim = 32 (./IntrinsicDAE_CelebA)
+3. IntrinsicDAE for CelebA with Dense encoder decoder. (./IntrinsicDAE_CelebA)
 
 If using the code, please cite: 
 
