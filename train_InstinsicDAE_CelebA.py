@@ -95,7 +95,7 @@ if torch.cuda.is_available() and not opt.cuda:
 
 
 def getBaseGrid(N=64, normalize = True, getbatch = False, batchSize = 1):
-    a = torch.arange(-(N-1), (N), 2)
+    a = torch.arange(-(N-1.0), (N), 2)
     if normalize:
         a = a/(N-1)
     x = a.repeat(N,1)
@@ -152,8 +152,8 @@ def setAsVariable(*args):
 # ---- The model ---- #
 # get the model definition/architecture
 # get network
-import DAENet
-
+#import DAENet
+import DAENet_InstanceNorm as DAENet
 if opt.useDense:
     encoders      = DAENet.Dense_Encoders_Intrinsic(opt)
     decoders      = DAENet.Dense_DecodersIntegralWarper2_Intrinsic(opt)

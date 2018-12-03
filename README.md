@@ -29,3 +29,8 @@ If using the code, please cite:
 
 Deforming Autoencoders: Unsupervised Disentangling of Shape and Appearance, Zhixin Shu, Mihir Sahasrabudhe, Riza Alp Guler, Dimitris Samaras, Nikos Paragios, and Iasonas Kokkinos. European Conference on Computer Vision (ECCV), 2018.
 
+
+# Update 12-13-2018
+1. Previous models with batch normalization suffer from data batch bias in testing. Replacing all nn.BatchNorm2d() layers (DAENet.py) with nn.InstanceNorm2d() layers (DAENet_InstanceNorm.py)would fix the problem in testing time.  
+2. Fixed bug on getBasedGrid(): previous code contains bug on integer->float convertion.
+ 
