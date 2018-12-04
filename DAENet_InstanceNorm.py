@@ -329,8 +329,6 @@ class waspDenseEncoder(nn.Module):
 
         self.main = nn.Sequential(
                 # input is (nc) x 64 x 64
-                nn.InstanceNorm2d(nc),
-                nn.ReLU(True),
                 nn.Conv2d(nc, ndf, 4, stride=2, padding=1),
 
                 # state size. (ndf) x 32 x 32
@@ -361,8 +359,6 @@ class waspDenseDecoder(nn.Module):
         self.ngpu   = ngpu
         self.main   = nn.Sequential(
             # input is Z, going into convolution
-            nn.InstanceNorm2d(nz),
-            activation(*args),
             nn.ConvTranspose2d(nz, ngf * 8, 4, 1, 0, bias=False),
 
             # state size. (ngf*8) x 4 x 4
